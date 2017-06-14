@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style type="text/css">
+        body{margin: 0;padding: 0;height:100%; width:100%; overflow:hidden;}
+        #left{width: 72%;height:827px;float: left}
+        #right{width: 28%;height:827px;float: right;margin-right: 0px}
+    </style>
+    <title>ledao</title>
+</head>
+<body>
+<div id="left" style="background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495875987269&di=961b471f2606f9bd0a3dc12dcf122cdd&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2F20120419BZ-YB%2F47.jpg');background-repeat:no-repeat;background-size:100% 100%;"></div>
+<div id="right">
+    <div align="center" style="margin-left: 10%;margin-top: 50%" class="row">
+    <h1 style="padding-bottom: 33px">用户登录</h1>
+    <!--<form method="post" action="/login_action/">-->
+        <!--<div class="input-group" >-->
+            <!--<span type="text" class="input-group-addon">帐号</span>-->
+            <!--<input name ='username' type = 'text' placeholder="用户名" class="form-control" height="15px"><br><br>-->
+        <!--</div>-->
+        <!--<div class="input-group" >-->
+            <!--<span type="text" class="input-group-addon">密码</span>-->
+            <!--<input name ='password' type = 'password' placeholder="密码" class="form-control"><br>-->
+        <!--</div>-->
+        <!--<h5>{{ error }}</h5><br>-->
+        <!--<button id="btn" type="submit" style="margin-left: -31%" class="btn btn-success">登录</button>-->
+        <!--{% csrf_token %}-->
+    <!--</form>-->
+
+
+    <form class="bs-example bs-example-form" role="form" method="post" action="/login_action/">
+		<div class="input-group col-xs-8 ">
+			<span class="input-group-addon">帐号</span>
+			<input name ='username' type="text" class="form-control" placeholder="例如：admin1">
+		</div><br>
+		<div class="input-group col-xs-8">
+			<span class="input-group-addon">密码</span>
+			<input name ='password' type="password" class="form-control" placeholder="例如：qn123456">
+		</div>
+        <h5>{{ error }}</h5><br>
+        <div>
+        <button id="btn " type="submit" style="margin-left: 63px;width: 66px;float: left" class="btn btn-success ">登录</button>
+            <h5 style="float: left;margin-left: 70px">忘记密码？<a href="#" style="color:#65be8a ">重置</a></h5>
+        </div>
+        {% csrf_token %}
+        <br><br><hr width="80%"/>
+        <h5 style="float: left;margin-left: 120px"> 还没有帐号？<a href="#" style="color:#65be8a ">立即注册</a></h5>
+	</form>
+
+    </div>
+</div>
+</body>
+</html>
