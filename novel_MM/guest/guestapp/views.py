@@ -22,18 +22,6 @@ def movie(request):
     return render(request, 'movie.html')
 
 
-# 分页+跳转页面
-def novel(request):
-    Novel_list = Novel.objects.all()
-    paginator = Paginator(Novel_list,10)
-    page = request.GET.get('page')
-    try:
-        contacts = paginator.page(page)
-    except PageNotAnInteger:
-        contacts = paginator.page(1)
-    except EmptyPage:
-        contacts = paginator.page(paginator.num_pages)
-    return render(request, 'novel.html', {'novels': contacts})
 
 
 def music(request):
@@ -107,4 +95,16 @@ def search_novel(request):
         return render(request, 'novel.html', {'novels': contacts})
 
 
+# 分页
+def novel(request):
+    Novel_list = Novel.objects.all()
+    paginator = Paginator(Novel_list, 10)
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        contacts = paginator.page(1)
+    except EmptyPage:
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, 'novel.html', {'novels': contacts})
 
