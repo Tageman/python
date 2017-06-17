@@ -20,11 +20,16 @@ from guestapp import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/$', views.index),
+
     url(r'^movie/$', views.movie),
-    url(r'^novel/$', views.novel),
+    url(r'^refresh_movie/$', views.refresh_movie),
+
     url(r'^music/$', views.music),
     url(r'^picture/$', views.picture),
+
+    url(r'^novel/$', views.novel),
     url(r'^refresh_novel/$', views.refresh_novel),
     url(r'^search_page/$', views.search_page),
     url(r'^search_novel/$', views.search_novel),
+
 ]

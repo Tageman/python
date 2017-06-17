@@ -1,14 +1,12 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from guestapp.models import Novel
+from guestapp.models import Novel, Movie
 import requests
 from bs4 import BeautifulSoup
-import threading
 import re
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from time import time
-from multiprocessing import Process, Pool
+
 
 # Create your views here.
 
@@ -18,8 +16,56 @@ def index(request):
     return render(request, 'index.html')
 
 
+# 电影页面
 def movie(request):
-    return render(request, 'movie.html')
+    Movie_list = Movie.objects.all()
+    return render(request, 'movie.html', {'movies': Movie_list})
+
+page_num = 6
+movie_pics = []
+movie_names = []
+movie_guys = []
+movie_directors = []
+movie_scores = []
+movie_score_imgs = []
+
+
+# 刷新电影页面
+def refresh_movie(request):
+    Movie.objects.all().delete()
+    for i in range(1, page_num):
+        url = 'http://www.imdb.cn/imdb250/' + str(i)
+        content = requests.get(url).content
+        movie_page_content = BeautifulSoup(content, 'html.parser')
+        # 电影封面
+        for movie_pic_total in movie_page_content.find_all('div', {'class': 'hong'}):
+            for movie_pic in movie_pic_total.find_all('img'):
+                movie_pics.append(movie_pic['src'])
+        # 电影名称
+        for movie_name_total in movie_page_content.find_all('p', {'class': 'bb'}):
+            movie_names.append(movie_name_total.text.strip())
+        # 电影剧情
+        for movie_guy_total in movie_page_content.find_all('div', {'class': 'honghe-5'}):
+            movie_guys.append(movie_guy_total.text.strip())
+        # 电影导演
+        for movie_director_total in movie_page_content.select('p > span'):
+            movie_directors.append(movie_director_total.text.strip())
+        # 电影评分
+        for movie_score_total in movie_page_content.select('span > i'):
+            movie_scores.append(movie_score_total.text.strip())
+        # 电影评分的图标
+        for movie_score_img_total in movie_page_content.select('p > img'):
+            movie_score_imgs.append(movie_score_img_total['src'])
+
+    # 插入数据库
+    movie_list = []
+    movie_num = 150
+    for i in range(movie_num):
+        movie_list.append(Movie(movie_name=movie_names[i], movie_guy=movie_guys[i], movie_pic=movie_pics[i], movie_director=movie_directors[i], movie_score=movie_scores[i], movie_score_img=movie_score_imgs[i]))
+    Movie.objects.bulk_create(movie_list)
+    Movie_list = Movie.objects.all()
+    return HttpResponseRedirect('/movie/')
+
 
 
 
