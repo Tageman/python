@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django&Python</title>
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!--导航-->
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/index/">MyBlog</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav" style="float: left">
+                <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+                <li><a href="/index/">主页</a></li>
+                <li class="active"><a href="/movie/">电影</a></li>
+                <li><a href="/novel/">小说</a></li>
+                <li><a href="/music/">音乐</a></li>
+                <li><a href="/picture/">图片</a></li>
+            </ul>
+            <ul class="nav navbar-nav" style="float: right">
+                <li><a href="/refresh_movie/">刷新</a></li>
+            </ul>
+        </div>
+	</div>
+</nav>
+<!--折叠显示-->
+{% for movie in movies %}
+<div class="panel panel-default" style="width: 490px;display: inline-block">
+	<div class="panel-heading">
+		<img src="{{ movie.movie_pic }}" width="200" height="300">
+        <p>
+            <h3 style="display: inline-block;color: #126cb3">{{ movie.movie_name }}</h3>
+            <h3 style="display: inline-block;color: red;padding-left: 88px">{{ movie.movie_score }}</h3>
+            <h5 style="color: darkgray">导演：（{{ movie.movie_director }}）</h5>
+            <h5 style="display: inline-block">评分：</h5><img style="display: inline-block" src="http://www.imdb.cn{{ movie.movie_score_img }}">
+            <button class="btn btn-link" data-toggle="modal" data-target="#{{ movie.id }}" style="text-decoration: none">
+	                剧情介绍
+            </button>
+                <!-- 模态框（Modal） -->
+            <div class="modal fade" id="{{ movie.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel" style="color: #126cb3">
+                                （{{ movie.movie_name }}）剧情介绍
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            {{ movie.movie_guy }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p>
+    </div>
+	<div class="panel-body">
+		&nbsp&nbsp准备中.....
+	</div>
+</div>
+{% endfor %}
+</body>
+</html>
