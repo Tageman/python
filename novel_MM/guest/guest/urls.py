@@ -25,7 +25,9 @@ urlpatterns = [
     url(r'^refresh_movie/$', views.refresh_movie),
 
     url(r'^music/$', views.music),
+
     url(r'^picture/$', views.picture),
+    url(r'^refresh_picture/$', views.refresh_picture),
 
     url(r'^novel/$', views.novel),
     url(r'^refresh_novel/$', views.refresh_novel),

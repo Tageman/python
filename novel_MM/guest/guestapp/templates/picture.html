@@ -6,6 +6,9 @@
     {% load bootstrap3 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse" role="navigation">
@@ -22,9 +25,19 @@
                 <li><a href="/music/">音乐</a></li>
                 <li class="active"><a href="/picture/">图片</a></li>
             </ul>
+            <ul class="nav navbar-nav" style="float: right">
+                <li><a href="/refresh_picture/">刷新</a></li>
+            </ul>
         </div>
 	</div>
 </nav>
+{% for picture in pictures %}
+<div class="panel panel-default" style="width: 600px;height: 500px;display: inline-block;margin-left: 100px">
+	<div class="panel-heading">
+		<img src="{{ picture.picture_url }}" width="550px" height="500px">
+	</div>
+</div>
+{% endfor %}
 
 </body>
 </html>

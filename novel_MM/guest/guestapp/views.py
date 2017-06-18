@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from guestapp.models import Novel, Movie
+from guestapp.models import Novel, Movie, Picture
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -63,7 +63,6 @@ def refresh_movie(request):
     for i in range(movie_num):
         movie_list.append(Movie(movie_name=movie_names[i], movie_guy=movie_guys[i], movie_pic=movie_pics[i], movie_director=movie_directors[i], movie_score=movie_scores[i], movie_score_img=movie_score_imgs[i]))
     Movie.objects.bulk_create(movie_list)
-    Movie_list = Movie.objects.all()
     return HttpResponseRedirect('/movie/')
 
 
@@ -73,9 +72,26 @@ def refresh_movie(request):
 def music(request):
     return render(request, 'music.html')
 
-
+# 图片页面显示
 def picture(request):
-    return render(request, 'picture.html')
+    picture_list = Picture.objects.all()
+    return render(request, 'picture.html', {'pictures': picture_list})
+
+# 刷新图片页面
+pic_img_url = []
+def refresh_picture(request):
+    Picture.objects.all().delete()
+    for i in range(1, 6):
+        url = 'https://visualhunt.com/popular/'+str(i)+'/?scolor=Grey'
+        content = requests.get(url).content
+        picture_page_content = BeautifulSoup(content, 'html.parser')
+        for pic_color in picture_page_content.find_all('img', {'class': 'vh-Collage-itemImg'}):
+            pic_img_url.append(pic_color['src'])
+    pic_list = []
+    for i in range(0, len(pic_img_url)):
+        pic_list.append(Picture(picture_url=pic_img_url[i]))
+    Picture.objects.bulk_create(pic_list)
+    return HttpResponseRedirect('/picture/')
 
 
 # 刷新小说

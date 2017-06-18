@@ -25,3 +25,10 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.movie_name
+
+
+class Picture(models.Model):
+    picture_url = models.URLField()
+
+    def __str__(self):
+        return self.picture_url
