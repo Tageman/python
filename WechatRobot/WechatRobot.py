@@ -2,7 +2,7 @@
 from wxpy import *
 
 bot = Bot()
-tuling = Tuling(api_key='a72dc2a74fc14f83b494a6f88cf5b641')
+tuling = Tuling(api_key='**************')
 
 
 @bot.register(msg_types=TEXT)
